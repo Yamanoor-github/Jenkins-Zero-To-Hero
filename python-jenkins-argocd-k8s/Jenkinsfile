@@ -27,16 +27,20 @@ pipeline {
             }
         }
 
-        stage('Push the artifacts'){
-           steps{
-                script{
+        stage('Push to ACR') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'acr-credentials', usernameVariable: 'ACR_USERNAME', passwordVariable: 'ACR_PASSWORD')]) {
                     sh '''
-                    echo 'Push to Repo'
+                    echo "Logging into ACR..."
+                    echo $ACR_PASSWORD | docker login isgpoc.azurecr.io -u $ACR_USERNAME --password-stdin
+        
+                    echo "Pushing Docker image..."
                     docker push isgpoc.azurecr.io/test:${BUILD_NUMBER}
                     '''
                 }
             }
         }
+
         
         // stage('Checkout K8S manifest SCM'){
         //     steps {
