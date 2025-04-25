@@ -22,7 +22,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                dir('/root/sonar'){
+                dir('/var/lib/jenkins/sonar'){
                 withSonarQubeEnv('sonarqube') {  // Must exactly match your Jenkins SonarQube server configuration name
                     sh 'mvn sonar:sonar'
                 }
