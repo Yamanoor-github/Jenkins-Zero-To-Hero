@@ -18,8 +18,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {  // Must match a configured server
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv('sonarqube') {  // Must exactly match your Jenkins SonarQube server configuration name
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=my-project \
+                        -Dsonar.projectName='My Project' \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=src/
+                    """
                 }
             }
         }
