@@ -22,8 +22,10 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
+                dir('/root/sonar'){
                 withSonarQubeEnv('sonarqube') {  // Must exactly match your Jenkins SonarQube server configuration name
                     sh 'mvn sonar:sonar'
+                }
                 }
             }
         }
