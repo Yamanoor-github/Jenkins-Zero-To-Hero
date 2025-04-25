@@ -18,16 +18,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {  // Replace 'MySonar' with your SonarQube server name in Jenkins config
-                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
-                        sh '''
-                        sonar-scanner \
-                            -Dsonar.projectKey=jenkins-demo \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=http://20.169.242.186/:9000 \
-                            -Dsonar.login=$SONAR_TOKEN
-                        '''
-                    }
+                withSonarQubeEnv('SonarQube') {  // Must match a configured server
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
