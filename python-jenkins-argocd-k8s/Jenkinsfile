@@ -18,7 +18,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {  // Must match a configured server
+                withSonarQubeEnv('sonarqube') {  // Must match a configured server
                     sh 'mvn sonar:sonar'
                 }
             }
